@@ -34,7 +34,7 @@ You can follow the tests by preparing your environment like;
 
 ### Example *Outlaw* DB
 
-Our example datasource contains data about the fomous outlaws of the **Wild West**
+Our example datasource contains data about the famous outlaws of the **Wild West**
 
 ```coffeescript
 _ = require 'lodash'
@@ -259,3 +259,5 @@ create = ->
 
     Promise.all(promises).then(close) 
 ```    
+
+`create` method executes a `CREATE TABLE {TABLE_NAME} ( ... )` for the tables in our Outlaw DB. Returns a promise when all the statements are fulfilled.
