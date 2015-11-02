@@ -164,6 +164,7 @@ Again, these settings has to be modified for different databases.
 
 Now lets define some methods that demostrates *CRUD* operations.
 
+** DROP **
 ```coffeescript
 ###
     @Method dropClean
@@ -197,6 +198,7 @@ dropClean = ->
 `dropClean` method executes a `DROP TABLE` statement for each `*_DDL` table and returns a promise when all the
 statements are fulfilled.
 
+** DELETE **
 ```coffeescript
 ###
     @Method deleteClean
@@ -233,6 +235,7 @@ deleteClean = ->
 
 `deleteClean` method executes a `DELETE FROM` statement for all tables in our DB. Returns a promise when all the statements are fulfilled. *In here we can also return the number of records modified for each statement.*
 
+** CREATE **
 ```coffeescript
 ###
     @Method create
@@ -262,6 +265,7 @@ create = ->
 
 `create` method executes a `CREATE TABLE {TABLE_NAME} ( ... )` for the tables in our Outlaw DB. Returns a promise when all the statements are fulfilled.
 
+** INSERT **
 ```coffeescript
 ###
     @Method load
@@ -292,6 +296,8 @@ load = ->
 `load` method executes a `INSERT` statements on our datastores and loads demo data. Returns promise when all the
 statements are fulfilled.
 
+
+** SELECT **
 ```coffeescript
 ###
     @Method read
