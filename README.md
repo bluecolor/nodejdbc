@@ -1,20 +1,20 @@
-# esdbc
+# nodejdbc
 JDBC API wrapper for nodejs
 
 A promise based JDBC wrapper for nodejs. Uses [bluebird](https://github.com/petkaantonov/bluebird) for promise integration and [node-java](https://github.com/joeferner/node-java) for calling java methods.
 
 One of the good things about java is its standard JDBC API. JDBC API provides a standard way for the client applications to access a data source. It has interface methods that enable clients to perform DDL(Data Definition Language) or DML(Data Manipulation Language) operations on the target data source. JDBC is oriented towards relational database systems. 
 
-esdbc tries to wrap JDBC API and provide a consistent way of accessing relational database systems. esdbc API also tries to extend JDBC API by introducing new methods
+nodejdbc tries to wrap JDBC API and provide a consistent way of accessing relational database systems. nodejdbc API also tries to extend JDBC API by introducing new methods
 
 ## Installation
-At the moment esdbc api is only available for local builds.
+At the moment nodejdbc api is only available for local builds.
 You can clone the repository and execute `make build` under project folder.
 
 * make sure `git` is installed
 * `cd path/to/install/directory`
-* `git clone https://github.com/blue-color/esdbc.git` 
-* `cd esdbc && make build`
+* `git clone https://github.com/blue-color/nodejdbc.git` 
+* `cd nodejdbc && make build`
 * check out the `lib` folder for library files
 
 
@@ -25,7 +25,7 @@ convert DDL,DML statements to apropriate syntax.
 
 You can follow the tests by preparing your environment like;
 
-* under esdbc `mkdir demo && cd demo`
+* under nodejdbc `mkdir demo && cd demo`
 * `mkdir driver` # i preferer *lib* as name but it would be confusing
 * make sure you have the [JDBC driver for SQLite](http://central.maven.org/maven2/org/xerial/sqlite-jdbc/3.8.11.2/sqlite-jdbc-3.8.11.2.jar) under the `driver` folder you have created on previous step 
 * `touch test.coffee` # Assuming you have the [coffeescript](http://coffeescript.org/) installed
@@ -38,7 +38,7 @@ Our example datasource contains data about the fomous outlaws of the **Wild West
 
 ```coffeescript
 _ = require 'lodash'
-ESDBC = require './esdbc'
+nodejdbc = require './nodejdbc'
 Promise = require 'bluebird'
 
 OUTLAW_DDL = '
@@ -176,9 +176,9 @@ Now lets define some methods that demostrates *CRUD* operations.
     successfully  
 ###
 dropClean = ->
-    esdbc = new ESDBC(config)
+    nodejdbc = new nodejdbc(config)
     promises = tables.map (table) ->
-        esdbc.createStatement().then (statement) ->
+        nodejdbc.createStatement().then (statement) ->
             sql = 'DROP TABLE ' + table
             console.log "Executing #{sql}"
 
@@ -188,7 +188,7 @@ dropClean = ->
             statement.executeUpdate(sql).catch(exception) 
 
     close = ->
-        esdbc.getConnection().then (connection) -> 
+        nodejdbc.getConnection().then (connection) -> 
             connection.close()
 
     Promise.all(promises).finally(close)        
@@ -208,9 +208,9 @@ statements are fulfilled.
 
 ###
 deleteClean = ->
-    esdbc = new ESDBC(config)
+    nodejdbc = new nodejdbc(config)
     promises = tables.map (table) ->
-        esdbc.createStatement().then (statement) ->
+        nodejdbc.createStatement().then (statement) ->
             sql = 'DELETE FROM ' + table
             console.log "Executing #{sql}"
 
@@ -222,18 +222,13 @@ deleteClean = ->
 
     # if db is not in AutoCommit mode          
     commit = ->
-        esdbc.getConnection().then (connection) ->
+        nodejdbc.getConnection().then (connection) ->
             connection.commit()
     close = ->
-        esdbc.getConnection().then (connection) -> 
+        nodejdbc.getConnection().then (connection) -> 
             connection.close()
 
     Promise.all(promises).finally(close)   
 ```
 
 `deleteClean` method executes a `DELETE FROM` statement for all tables in our DB. Returns a promise when all the statements are fulfilled. *In here we can also return the number of records modified for each statement.*
-
-
-
-
-
