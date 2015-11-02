@@ -292,7 +292,7 @@ load = ->
 `load` method executes a `INSERT` statements on our datastores and loads demo data. Returns promise when all the
 statements are fulfilled.
 
-```
+```coffeescript
 ###
     @Method read
     executes a sample select statement and returns all the records as a json object
