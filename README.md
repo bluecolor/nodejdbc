@@ -38,7 +38,7 @@ Our example datasource contains data about the fomous outlaws of the **Wild West
 
 ```coffeescript
 _ = require 'lodash'
-nodejdbc = require './nodejdbc'
+NodeJDBC = require './nodejdbc'
 Promise = require 'bluebird'
 
 OUTLAW_DDL = '
@@ -176,7 +176,7 @@ Now lets define some methods that demostrates *CRUD* operations.
     successfully  
 ###
 dropClean = ->
-    nodejdbc = new nodejdbc(config)
+    nodejdbc = new NodeJDBC(config)
     promises = tables.map (table) ->
         nodejdbc.createStatement().then (statement) ->
             sql = 'DROP TABLE ' + table
@@ -208,7 +208,7 @@ statements are fulfilled.
 
 ###
 deleteClean = ->
-    nodejdbc = new nodejdbc(config)
+    nodejdbc = new NodeJDBC(config)
     promises = tables.map (table) ->
         nodejdbc.createStatement().then (statement) ->
             sql = 'DELETE FROM ' + table
