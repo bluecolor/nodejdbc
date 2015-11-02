@@ -363,6 +363,13 @@ to generate API docs just run;
 make docs
 ```
 
+# Tests
+Unit tests are located under test folder. You need [mocha](https://github.com/mochajs/mocha) to execute  unit tests. Run the tests with
+```bash
+make build
+make test
+```
+
 
 # Getting Help
 Use [issues](https://github.com/blue-color/nodejdbc/issues) with appropriate labels for;
