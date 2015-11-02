@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>nodejdbc</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Nodejdbc'>
+      Nodejdbc
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>test.coffee</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        File:
+        test.coffee
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>.</td>
+        </tr>
+      </table>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='OUTLAW_DDL-variable'>
+    OUTLAW_DDL
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;CREATE TABLE OUTLAW ( ID              INT, NAME            TEXT, AKA             TEXT, GANG            INT, BIRTH_DATE      DATE, DEATH_DATE      DATE, HANDEDNESS      INT )&#39;</code></pre>
+    
+  </dd>
+  <dt id='OUTLAW_DML-variable'>
+    OUTLAW_DML
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>[&#39;INSERT INTO OUTLAW (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS) VALUES (10, &quot;Henry McCarty&quot;, &quot;Billy the Kid&quot;, 10, &quot;1859.September.17&quot;,&quot;1881.July.14&quot;,10)&#39;, &#39;INSERT INTO OUTLAW (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS) VALUES (20, &quot;Josiah Gordon Scurlock&quot;, &quot;Doc&quot;, 10, &quot;1849.January.11&quot;,&quot;1929.July.25&quot;,20)&#39;, &#39;INSERT INTO OUTLAW (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS) VALUES (30, &quot;Jesse Woodson James&quot;, &quot;Jesse James&quot;, 20, &quot;1847.September.05&quot;,&quot;1882.April.03&quot;,20)&#39;, &#39;INSERT INTO OUTLAW (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS) VALUES (40, &quot;Alexander Franklin James&quot;, &quot;Frank&quot;, 20, &quot;1843.January.10&quot;,&quot;1915.February.18&quot;,20)&#39;, &#39;INSERT INTO OUTLAW (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS) VALUES (50,&quot;Harry Alonzo Longabaugh&quot;,&quot;Sundance Kid&quot;,30, &quot;1867.July.17&quot;,&quot;1908.November.07&quot;,30)&#39;, &#39;INSERT INTO OUTLAW (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS) VALUES (60,&quot;Robert Leroy Parker&quot;,&quot;Butch Cassidy&quot;,30, &quot;1867.July.17&quot;,&quot;1908.November.07&quot;,30)&#39;, &#39;INSERT INTO OUTLAW (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS) VALUES (70,&quot;John Wesley Hardin&quot;,&quot;Little Arkansaw&quot;,40, &quot;1853.May.26&quot;,&quot;1895.Agust.19&quot;,40)&#39;]</code></pre>
+    
+  </dd>
+  <dt id='GANG_DDL-variable'>
+    GANG_DDL
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;CREATE TABLE GANG ( ID      INT, NAME    TEXT, LEADER  INT )&#39;</code></pre>
+    
+  </dd>
+  <dt id='GANG_DML-variable'>
+    GANG_DML
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>[&#39;INSERT INTO GANG (ID,NAME, LEADER) VALUES (10,&quot;Regulators&quot;,10)&#39;, &#39;INSERT INTO GANG (ID,NAME, LEADER) VALUES (20,&quot;James-Younger&quot;,30)&#39;, &#39;INSERT INTO GANG (ID,NAME, LEADER) VALUES (30,&quot;Wild Bunch&quot;,60)&#39;, &#39;INSERT INTO GANG (ID,NAME, LEADER) VALUES (40,&quot;Hardin Gang&quot;,70)&#39;]</code></pre>
+    
+  </dd>
+  <dt id='HANDEDNESS_DDL-variable'>
+    HANDEDNESS_DDL
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;CREATE TABLE HANDEDNESS ( ID      INT, NAME    TEXT, DESC    TEXT )&#39;</code></pre>
+    
+  </dd>
+  <dt id='HANDEDNESS_DML-variable'>
+    HANDEDNESS_DML
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>[&#39;INSERT INTO HANDEDNESS (ID, NAME, DESC) VALUES (10, &quot;Left Handed&quot;,  &quot;Uses left hand primarily&quot;)&#39;, &#39;INSERT INTO HANDEDNESS (ID, NAME, DESC) VALUES (20, &quot;Right Handed&quot;, &quot;Uses right hand primarily&quot;)&#39;, &#39;INSERT INTO HANDEDNESS (ID, NAME, DESC) VALUES (30, &quot;Mixed Handed&quot;, &quot;Uses one or the other hand for different tasks&quot;)&#39;, &#39;INSERT INTO HANDEDNESS (ID, NAME, DESC) VALUES (40, &quot;Ambidextrous&quot;, &quot;Uses both hands equally.&quot;)&#39;]</code></pre>
+    
+  </dd>
+  <dt id='ddls-variable'>
+    ddls
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>[OUTLAW_DDL, GANG_DDL, HANDEDNESS_DDL]</code></pre>
+    
+  </dd>
+  <dt id='dmls-variable'>
+    dmls
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>[OUTLAW_DML, GANG_DML, HANDEDNESS_DML]</code></pre>
+    
+  </dd>
+  <dt id='tables-variable'>
+    tables
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>[&#39;OUTLAW&#39;, &#39;GANG&#39;, &#39;HANDEDNESS&#39;]</code></pre>
+    
+  </dd>
+  <dt id='config-variable'>
+    config
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>{
+  libs: [&#39;lib&#47;sqlite-jdbc-3.8.11.2.jar&#39;, &#39;commons-collections-3.2.1.jar&#39;],
+  className: &#39;org.sqlite.JDBC&#39;,
+  url: &#39;jdbc:sqlite:test.db&#39;
+}</code></pre>
+    
+  </dd>
+</dl>
+      <h2>Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#dropClean-'>
+        ~
+(?)
+<b>dropClean</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Drops all _DDL tables. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#deleteClean-'>
+        ~
+(?)
+<b>deleteClean</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Deletes all the records from the tables in our Outlaw DB. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#create-'>
+        ~
+(?)
+<b>create</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      executes CREATE ddl statements. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#load-'>
+        ~
+(?)
+<b>load</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Inserts records to tables. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#read-'>
+        ~
+(Object)
+<b>read</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      executes a sample select statement and returns all the records as a json object 
+    </span>
+  </li>
+</ul>
+      <h2>Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='dropClean-'>
+      ~
+(?)
+<b>dropClean</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Drops all _DDL tables. This method throws
+TableNotFound exception if the tables do not exist
+in database.</p><p>successfully</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>returns a promise when all the tables are dropped  </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='deleteClean-'>
+      ~
+(?)
+<b>deleteClean</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    We can also return number of records deleted for each statement. 
+  </div>
+  <p>Deletes all the records from the tables in our Outlaw DB.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>returns a promise when all the DELETE statements are fulfilled. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='create-'>
+      ~
+(?)
+<b>create</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>executes CREATE ddl statements.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>returns a promise when all the CREATE statements are fulfilled. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='load-'>
+      ~
+(?)
+<b>load</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Inserts records to tables.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>returns a promise when all the CREATE statements are fulfilled. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='read-'>
+      ~
+(Object)
+<b>read</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>executes a sample select statement and returns all the records as a json object</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Object</tt>
+      )
+      &mdash;
+      <span class='desc'>result all records returned by the sample SQL query </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  November 02, 15 19:30:01 by
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.0.11
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

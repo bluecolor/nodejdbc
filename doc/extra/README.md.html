@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>nodejdbc</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Nodejdbc'>
+      Nodejdbc
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>README.md</span>
+  </div>
+</div>
+    <div id='content'>
+      <nav class='toc'>
+        <p class='title'>
+          <a class='hide_toc' href='#'>
+            <strong>Table of Contents</strong>
+          </a>
+          <small>
+            (<a class='float_toc' href='#'>left</a>)
+          </small>
+        </p>
+      </nav>
+      <div id='filecontents'>
+        <h1 id="nodejdbc">nodejdbc</h1><p>JDBC API wrapper for nodejs</p><p>A promise based JDBC wrapper for nodejs. Uses <a href="https://github.com/petkaantonov/bluebird">bluebird</a> for promise integration and <a href="https://github.com/joeferner/node-java">node-java</a> for calling java methods.</p><p>One of the good things about java is its standard JDBC API. JDBC API provides a standard way for the client applications to access a data source. It has interface methods that enable clients to perform DDL(Data Definition Language) or DML(Data Manipulation Language) operations on the target data source. JDBC is oriented towards relational database systems. </p><p>nodejdbc tries to wrap JDBC API and provide a consistent way of accessing relational database systems. nodejdbc API also tries to extend JDBC API by introducing new methods</p><h2 id="installation">Installation</h2><p>At the moment nodejdbc api is only available for local builds.
+You can clone the repository and execute <code>make build</code> under project folder.</p><ul>
+<li>make sure <code>git</code> is installed</li>
+<li><code>cd path/to/install/directory</code></li>
+<li><code>git clone https://github.com/blue-color/nodejdbc.git</code> </li>
+<li><code>cd nodejdbc &amp;&amp; make build</code></li>
+<li>check out the <code>lib</code> folder for library files</li>
+</ul>
+<h2 id="examples">Examples</h2><p>To give a real insight about the usage of the API lets create sample datastores on <a href="https://www.sqlite.org/">SQLite</a> database. Other JDBC-Compliant databases can also be chosen but do not forget to
+convert DDL,DML statements to apropriate syntax.</p><p>You can follow the tests by preparing your environment like;</p><ul>
+<li>under nodejdbc <code>mkdir demo &amp;&amp; cd demo</code></li>
+<li><code>mkdir driver</code> # i preferer <em>lib</em> as name but it would be confusing</li>
+<li>make sure you have the <a href="http://central.maven.org/maven2/org/xerial/sqlite-jdbc/3.8.11.2/sqlite-jdbc-3.8.11.2.jar">JDBC driver for SQLite</a> under the <code>driver</code> folder you have created on previous step </li>
+<li><code>touch test.coffee</code> # Assuming you have the <a href="http://coffeescript.org/">coffeescript</a> installed</li>
+<li>install following packages <a href="https://github.com/lodash/lodash">lodash</a> ,  <a href="https://github.com/petkaantonov/bluebird">bluebird</a></li>
+<li>use your text editor to copy and try the following examples</li>
+</ul>
+<h3 id="example-outlaw-db">Example <em>Outlaw</em> DB</h3><p>Our example datasource contains data about the famous outlaws of the <strong>Wild West</strong></p><pre><code class="lang-coffeescript">_ = require &#39;lodash&#39;
+NodeJDBC = require &#39;./nodejdbc&#39;
+Promise = require &#39;bluebird&#39;
+
+OUTLAW_DDL = &#39;
+    CREATE TABLE OUTLAW
+    (
+        ID              INT,
+        NAME            TEXT,
+        AKA             TEXT,
+        GANG            INT,
+        BIRTH_DATE      DATE,
+        DEATH_DATE      DATE,
+        HANDEDNESS      INT
+    )&#39;
+
+OUTLAW_DML = [
+    &#39;INSERT INTO OUTLAW 
+        (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS)
+     VALUES 
+        (10, &quot;Henry McCarty&quot;, &quot;Billy the Kid&quot;, 10, &quot;1859.September.17&quot;,&quot;1881.July.14&quot;,10)&#39;,
+
+    &#39;INSERT INTO OUTLAW 
+        (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS)
+     VALUES 
+        (20, &quot;Josiah Gordon Scurlock&quot;, &quot;Doc&quot;, 10, &quot;1849.January.11&quot;,&quot;1929.July.25&quot;,20)&#39;,
+
+    &#39;INSERT INTO OUTLAW 
+        (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS)
+     VALUES 
+        (30, &quot;Jesse Woodson James&quot;, &quot;Jesse James&quot;, 20, &quot;1847.September.05&quot;,&quot;1882.April.03&quot;,20)&#39;,
+
+    &#39;INSERT INTO OUTLAW
+        (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS)
+     VALUES  
+        (40, &quot;Alexander Franklin James&quot;, &quot;Frank&quot;, 20, &quot;1843.January.10&quot;,&quot;1915.February.18&quot;,20)&#39;,
+
+    &#39;INSERT INTO OUTLAW 
+        (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS)
+     VALUES
+        (50,&quot;Harry Alonzo Longabaugh&quot;,&quot;Sundance Kid&quot;,30, &quot;1867.July.17&quot;,&quot;1908.November.07&quot;,30)&#39;,
+
+    &#39;INSERT INTO OUTLAW 
+        (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS)
+     VALUES
+        (60,&quot;Robert Leroy Parker&quot;,&quot;Butch Cassidy&quot;,30, &quot;1867.July.17&quot;,&quot;1908.November.07&quot;,30)&#39;,
+
+    &#39;INSERT INTO OUTLAW 
+        (ID, NAME, AKA, GANG, BIRTH_DATE, DEATH_DATE, HANDEDNESS)
+     VALUES
+        (70,&quot;John Wesley Hardin&quot;,&quot;Little Arkansaw&quot;,40, &quot;1853.May.26&quot;,&quot;1895.Agust.19&quot;,40)&#39;    
+]
+
+GANG_DDL = &#39;
+    CREATE TABLE GANG
+    (
+        ID      INT,
+        NAME    TEXT,
+        LEADER  INT
+    )&#39;
+
+GANG_DML = [
+    &#39;INSERT INTO GANG (ID,NAME, LEADER) VALUES (10,&quot;Regulators&quot;,10)&#39;,
+    &#39;INSERT INTO GANG (ID,NAME, LEADER) VALUES (20,&quot;James-Younger&quot;,30)&#39;
+    &#39;INSERT INTO GANG (ID,NAME, LEADER) VALUES (30,&quot;Wild Bunch&quot;,60)&#39;,
+    &#39;INSERT INTO GANG (ID,NAME, LEADER) VALUES (40,&quot;Hardin Gang&quot;,70)&#39;
+]
+
+HANDEDNESS_DDL = &#39;
+    CREATE TABLE HANDEDNESS
+    (
+        ID      INT,
+        NAME    TEXT,
+        DESC    TEXT
+    )&#39;
+
+HANDEDNESS_DML = [
+    &#39;INSERT INTO HANDEDNESS 
+        (ID, NAME, DESC) 
+    VALUES 
+        (10, &quot;Left Handed&quot;,  &quot;Uses left hand primarily&quot;)&#39;,
+
+    &#39;INSERT INTO HANDEDNESS 
+        (ID, NAME, DESC) 
+    VALUES 
+        (20, &quot;Right Handed&quot;, &quot;Uses right hand primarily&quot;)&#39;,
+
+    &#39;INSERT INTO HANDEDNESS 
+        (ID, NAME, DESC) 
+    VALUES
+        (30, &quot;Mixed Handed&quot;, &quot;Uses one or the other hand for different tasks&quot;)&#39;,
+
+    &#39;INSERT INTO HANDEDNESS 
+        (ID, NAME, DESC) 
+    VALUES 
+        (40, &quot;Ambidextrous&quot;, &quot;Uses both hands equally.&quot;)&#39;
+]
+</code></pre><p>Above code block contains the <code>require</code> statements for needed libraries and <code>SQL</code> statements for creating and loading our data stores. You have to modify these <code>SQL</code> statements if you connect to a database other than <a href="https://www.sqlite.org/">SQLite</a>.</p><p>Store <code>SQL</code> ddl and dml statements in corresponding arrays for easy way to acceess them.</p><pre><code class="lang-coffeescript">ddls    = [OUTLAW_DDL,GANG_DDL,HANDEDNESS_DDL]
+dmls    = [OUTLAW_DML,GANG_DML,HANDEDNESS_DML]
+tables  = [&#39;OUTLAW&#39;,&#39;GANG&#39;,&#39;HANDEDNESS&#39;]
+</code></pre><p>Create a configuration <code>object</code> like the following to access to your database.</p><pre><code class="lang-coffeescript">config =
+    libs : [&#39;driver/sqlite-jdbc-3.8.11.2.jar&#39;]
+    className: &#39;org.sqlite.JDBC&#39;
+    url: &#39;jdbc:sqlite:test.db&#39;
+</code></pre><p>This config object contains attribute;</p><ul>
+<li><code>libs:</code> SQLite JDBC driver path (relative to your working directory)</li>
+<li><code>className:</code> Name of the class that will be loaded. (check out <a href="http://stackoverflow.com/questions/8053095/what-is-the-actual-use-of-class-fornameoracle-jdbc-driver-oracledriver-while">this</a> discussion for more info.)</li>
+<li><code>url:</code> jdbc url for acceessing our <a href="https://www.sqlite.org/">SQLite</a> database</li>
+</ul><p>Again, these settings has to be modified for different databases.</p><p>Now lets define some methods that demostrates <em>CRUD</em> operations.</p><p><strong>DROP</strong></p><pre><code class="lang-coffeescript">###
+    @Method dropClean
+
+    Drops all _DDL tables. This method throws
+    TableNotFound exception if the tables do not exist
+    in database.
+
+    @return returns a promise when all the tables are dropped 
+    successfully  
+###
+dropClean = -&gt;
+    nodejdbc = new NodeJDBC(config)
+    promises = tables.map (table) -&gt;
+        nodejdbc.createStatement().then (statement) -&gt;
+            sql = &#39;DROP TABLE &#39; + table
+            console.log &quot;Executing #{sql}&quot;
+
+            exception = (e) -&gt;
+                console.log &quot;Failed to drop table #{table}&quot;
+                console.log e
+            statement.executeUpdate(sql).catch(exception) 
+
+    close = -&gt;
+        nodejdbc.getConnection().then (connection) -&gt; 
+            connection.close()
+
+    Promise.all(promises).finally(close)
+</code></pre><p><code>dropClean</code> method executes a <code>DROP TABLE</code> statement for each <code>*_DDL</code> table and returns a promise when all the
+statements are fulfilled.</p><p><strong>DELETE</strong></p><pre><code class="lang-coffeescript">###
+    @Method deleteClean
+
+    Deletes all the records from the tables in our Outlaw DB.
+    We can also get and map the number of records deleted for each statement.
+
+    @return returns a promise when all the DELETE statements are fulfilled.
+
+###
+deleteClean = -&gt;
+    nodejdbc = new NodeJDBC(config)
+    promises = tables.map (table) -&gt;
+        nodejdbc.createStatement().then (statement) -&gt;
+            sql = &#39;DELETE FROM &#39; + table
+            console.log &quot;Executing #{sql}&quot;
+
+            exception = (e) -&gt;
+                console.log &quot;Failed to delete table #{table}&quot;
+                console.log e
+
+            statement.executeUpdate(sql).catch(exception)
+
+    # if db is not in AutoCommit mode          
+    commit = -&gt;
+        nodejdbc.getConnection().then (connection) -&gt;
+            connection.commit()
+    close = -&gt;
+        nodejdbc.getConnection().then (connection) -&gt; 
+            connection.close()
+
+    Promise.all(promises).finally(close)
+</code></pre><p><code>deleteClean</code> method executes a <code>DELETE FROM</code> statement for all tables in our DB. Returns a promise when all the statements are fulfilled. <em>In here we can also return the number of records modified for each statement.</em></p><p><strong>CREATE</strong></p><pre><code class="lang-coffeescript">###
+    @Method create
+
+    executes CREATE ddl statements.
+
+    @return returns a promise when all the CREATE statements are fulfilled.
+###
+create = -&gt;
+    nodejdbc = new NodeJDBC(config)
+    promises = ddls.map (ddl) -&gt;
+            nodejdbc.createStatement().then (statement) -&gt;
+                console.log &quot;Executing \n #{ddl}&quot;
+
+                exception = (e) -&gt;
+                    console.log e
+
+                statement.executeUpdate(ddl).catch(exception) 
+
+    close = -&gt;
+        nodejdbc.getConnection().then (connection) -&gt; 
+            connection.close()
+
+
+    Promise.all(promises).then(close)
+</code></pre><p><code>create</code> method executes a <code>CREATE TABLE {TABLE_NAME} ( ... )</code> for the tables in our Outlaw DB. Returns a promise when all the statements are fulfilled.</p><p><strong>INSERT</strong></p><pre><code class="lang-coffeescript">###
+    @Method load
+    Inserts records to tables.
+    @return returns a promise when all the CREATE statements are fulfilled.
+###
+load = -&gt;
+    nodejdbc = new NodeJDBC(config)
+    promises = _.flatten(dmls).map (dml) -&gt;
+            nodejdbc.createStatement().then (statement) -&gt;
+                console.log &quot;Executing \n #{dml}&quot;
+
+                exception = (e) -&gt;
+                    console.log e
+                statement.executeUpdate(dml).catch(exception)
+
+    # if db is not in AutoCommit mode            
+    commit = -&gt;
+        nodejdbc.getConnection().then (connection) -&gt;
+            connection.commit()
+    close = -&gt;
+        nodejdbc.getConnection().then (connection) -&gt; 
+            connection.close() 
+
+    Promise.all(promises).then(close)
+</code></pre><p><code>load</code> method executes a <code>INSERT</code> statements on our datastores and loads demo data. Returns promise when all the
+statements are fulfilled.</p><p><strong>SELECT</strong></p><pre><code class="lang-coffeescript">###
+    @Method read
+    executes a sample select statement and returns all the records as a json object
+
+    @return [Object] result all records returned by the sample SQL query
+###
+read = -&gt;
+    sql = &#39;SELECT NAME,AKA FROM OUTLAW&#39;
+    nodejdbc = new NodeJDBC(config)
+    promise = nodejdbc.createStatement().then (statement) -&gt;
+        statement.executeQuery(sql).then (rs)-&gt;
+            result = []
+            while rs.next()
+                name = rs.getString(&#39;NAME&#39;)
+                aka = rs.getString(&#39;AKA&#39;)
+                result.push {} =
+                    name: name
+                    aka: aka
+            result
+
+
+    promise.then (result) -&gt;
+        nodejdbc.getConnection().then (connection) -&gt; 
+            connection.close()
+            result
+</code></pre><p><code>read</code> method executes a sample <code>SELECT</code> statement and returns a promise that resolves to an array
+containing all the records returned by the given sample query. </p><p>Now lets call these methods to execute some test stuff...</p><p>Call the following to execute drop , create and load operations in order.</p><pre><code class="lang-coffeescript"># Drop -&gt; Create -&gt; Insert
+dropClean().then(create).then(load)
+</code></pre><p>If it is the first time you execute this script or in other words; if the tables do not exist in db yet
+you will see some exception messages on the screen, these messages can be ignored.</p><p>drop, clean, load, delete which means eventually we will get set of empty tables</p><pre><code class="lang-coffeescript"># Drop -&gt; Create -&gt; Insert -&gt; Delete
+dropClean().then(create).then(load).then(deleteClean)
+</code></pre><p>Execute a sample <code>SELECT</code> statement. we can also modify our <code>read</code> method so that it accepts sql statements
+and returns result like <code>read(sql)</code></p><pre><code class="lang-coffeescript"># Read
+read().then (result) -&gt;
+    console.log result
+</code></pre><p>These examples are also available in the repository on a single file <em>test.coffee</em>.</p><h1 id="getting-help">Getting Help</h1><p>Use <a href="https://github.com/blue-color/nodejdbc/issues">issues</a> with appropriate labels for;</p><ul>
+<li>Bugs</li>
+<li>Feature requests</li>
+<li>Questions</li>
+</ul>
+<h1 id="license">License</h1><p>Copyright (c) 2014-2015, BlueColor</p><p>Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot; AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.</p>
+      </div>
+    </div>
+    <div id='footer'>
+  November 02, 15 19:30:01 by
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.0.11
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>
