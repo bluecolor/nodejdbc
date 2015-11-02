@@ -1,13 +1,12 @@
 PATH := ./node_modules/.bin:${PATH}
 
-#.PHONY : init clean-docs clean build test dist publish
+.PHONY : init clean build test
 
 init:
 	npm install
 
-# use codo
-# docs:
-# 	docco --layout linear src/*.coffee
+docs:
+	codo -t nodejdbc
 
 clean-docs:
 	rm -rf docs/
@@ -17,14 +16,14 @@ clean:
 	rm -fr lib/ test/*.js
 
 build:
-	coffee -o lib/ -c src/ && coffee -c test/x.coffee
+	coffee -o lib/ -c src/ && coffee -c test/test.coffee
 
 test:
-	nodeunit test/x.js
+	cd test && mocha test.js && cd ../
 
-dist: 
-	clean init docs build test
+# dist: 
+# 	clean init docs build test
 
-publish: 
-	dist
-	npm publish
+# publish: 
+# 	dist
+# 	npm publish
