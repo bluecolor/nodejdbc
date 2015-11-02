@@ -261,3 +261,70 @@ create = ->
 ```    
 
 `create` method executes a `CREATE TABLE {TABLE_NAME} ( ... )` for the tables in our Outlaw DB. Returns a promise when all the statements are fulfilled.
+
+```coffeescript
+###
+    @Method load
+    Inserts records to tables.
+    @return returns a promise when all the CREATE statements are fulfilled.
+###
+load = ->
+    nodejdbc = new NodeJDBC(config)
+    promises = _.flatten(dmls).map (dml) ->
+            nodejdbc.createStatement().then (statement) ->
+                console.log "Executing \n #{dml}"
+
+                exception = (e) ->
+                    console.log e
+                statement.executeUpdate(dml).catch(exception)
+
+    # if db is not in AutoCommit mode            
+    commit = ->
+        nodejdbc.getConnection().then (connection) ->
+            connection.commit()
+    close = ->
+        nodejdbc.getConnection().then (connection) -> 
+            connection.close() 
+                            
+    Promise.all(promises).then(close)
+```
+
+`load` method executes a `INSERT` statements on our datastores and loads demo data. Returns promise when all the
+statements are fulfilled.
+
+```
+###
+    @Method read
+    executes a sample select statement and returns all the records as a json object
+
+    @return [Object] result all records returned by the sample SQL query
+###
+read = ->
+    sql = 'SELECT NAME,AKA FROM OUTLAW'
+    nodejdbc = new NodeJDBC(config)
+    promise = nodejdbc.createStatement().then (statement) ->
+        statement.executeQuery(sql).then (rs)->
+            result = []
+            while rs.next()
+                name = rs.getString('NAME')
+                aka = rs.getString('AKA')
+                result.push {} =
+                    name: name
+                    aka: aka
+            result
+
+            
+    promise.then (result) ->
+        nodejdbc.getConnection().then (connection) -> 
+            connection.close()
+            result   
+```
+
+`read` method executes a sample `SELECT` statement and returns a promise that resolves to an array
+containing all the records returned by the given sample query. 
+
+
+
+
+
+
