@@ -232,3 +232,30 @@ deleteClean = ->
 ```
 
 `deleteClean` method executes a `DELETE FROM` statement for all tables in our DB. Returns a promise when all the statements are fulfilled. *In here we can also return the number of records modified for each statement.*
+
+```coffeescript
+###
+    @Method create
+
+    executes CREATE ddl statements.
+    
+    @return returns a promise when all the CREATE statements are fulfilled.
+###
+create = ->
+    nodejdbc = new NodeJDBC(config)
+    promises = ddls.map (ddl) ->
+            nodejdbc.createStatement().then (statement) ->
+                console.log "Executing \n #{ddl}"
+
+                exception = (e) ->
+                    console.log e
+                
+                statement.executeUpdate(ddl).catch(exception) 
+
+    close = ->
+        nodejdbc.getConnection().then (connection) -> 
+            connection.close()
+            
+
+    Promise.all(promises).then(close) 
+```    
