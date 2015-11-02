@@ -333,10 +333,19 @@ dropClean().then(create).then(load)
 If it is the first time you execute this script or in other words; if the tables do not exist in db yet
 you will see some exception messages on the screen, these messages can be ignored.
 
+drop, clean, load, delete which means eventually we will get set of empty tables
+```coffeescript
+# Drop -> Create -> Insert -> Delete
+dropClean().then(create).then(load).then(deleteClean)
+```
 
-
-
-
+Execute a sample `SELECT` statement. we can also modify our `read` method so that it accepts sql statements
+and returns result like ```coffeescript read(sql)```
+```coffeescript
+# Read
+read().then (result) ->
+    console.log result
+```
 
 
 
