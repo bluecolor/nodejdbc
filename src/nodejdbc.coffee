@@ -28,7 +28,9 @@ class NodeJDBC
     # @option options [String] url jdbc url @example 'jdbc:sqlite:test.db'    
     constructor: (@config) ->
         @validateConfig()
-        java.classpath.push.apply java.classpath, @config.libs
+        _.each @config.libs, (lib) ->
+            if java.classpath.indexOf(lib) < 0
+                java.classpath.push.apply java.classpath, [lib]    
         @registerDriver()
         
     # Each time creates new connection to the given datasource!
