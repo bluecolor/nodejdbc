@@ -340,7 +340,8 @@ dropClean().then(create).then(load).then(deleteClean)
 ```
 
 Execute a sample `SELECT` statement. we can also modify our `read` method so that it accepts sql statements
-and returns result like ```coffeescript read(sql)```
+and returns result like `read(sql)`
+
 ```coffeescript
 # Read
 read().then (result) ->
