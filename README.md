@@ -356,6 +356,14 @@ read().then (result) ->
 
 These examples are also available in the repository on a single file *test.coffee*.
 
+# API Docs
+API docs are located under `doc` folder. Thanks to [codo](https://github.com/coffeedoc/codo)
+to generate API docs just run;
+```bash
+make docs
+```
+
+
 # Getting Help
 Use [issues](https://github.com/blue-color/nodejdbc/issues) with appropriate labels for;
 * Bugs
