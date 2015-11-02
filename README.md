@@ -198,7 +198,7 @@ dropClean = ->
 `dropClean` method executes a `DROP TABLE` statement for each `*_DDL` table and returns a promise when all the
 statements are fulfilled.
 
-** DELETE **
+**DELETE**
 ```coffeescript
 ###
     @Method deleteClean
@@ -235,7 +235,7 @@ deleteClean = ->
 
 `deleteClean` method executes a `DELETE FROM` statement for all tables in our DB. Returns a promise when all the statements are fulfilled. *In here we can also return the number of records modified for each statement.*
 
-** CREATE **
+**CREATE**
 ```coffeescript
 ###
     @Method create
@@ -265,7 +265,7 @@ create = ->
 
 `create` method executes a `CREATE TABLE {TABLE_NAME} ( ... )` for the tables in our Outlaw DB. Returns a promise when all the statements are fulfilled.
 
-** INSERT **
+**INSERT**
 ```coffeescript
 ###
     @Method load
@@ -297,7 +297,7 @@ load = ->
 statements are fulfilled.
 
 
-** SELECT **
+**SELECT**
 ```coffeescript
 ###
     @Method read
