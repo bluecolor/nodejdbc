@@ -323,6 +323,19 @@ read = ->
 `read` method executes a sample `SELECT` statement and returns a promise that resolves to an array
 containing all the records returned by the given sample query. 
 
+Now lets call these methods to execute some test stuff...
+
+Call the following to execute drop , create and load operations in order.
+```coffeescript
+# Drop -> Create -> Insert
+dropClean().then(create).then(load)
+```
+If it is the first time you execute this script or in other words; if the tables do not exist in db yet
+you will see some exception messages on the screen, these messages can be ignored.
+
+
+
+
 
 
 
