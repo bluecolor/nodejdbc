@@ -364,11 +364,12 @@ make docs
 ```
 
 # Tests
-Unit tests are located under test folder. You need [mocha](https://github.com/mochajs/mocha) to execute  unit tests. Run the tests with
+Unit tests are located under test folder. You'll need [mocha](https://github.com/mochajs/mocha) to execute  unit tests. Run the tests with
 ```bash
 make build
 make test
 ```
+Make sure you have the followind `test/lib/sqlite-jdbc-3.8.11.2.jar` .
 
 
 # Getting Help
