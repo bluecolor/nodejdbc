@@ -164,7 +164,7 @@ Again, these settings has to be modified for different databases.
 
 Now lets define some methods that demostrates *CRUD* operations.
 
-** DROP **
+**DROP**
 ```coffeescript
 ###
     @Method dropClean
