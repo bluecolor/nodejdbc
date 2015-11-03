@@ -14,6 +14,7 @@ class CallableStatement extends PreparedStatement
         super callableStatement
         @callableStatement = Promise.promisifyAll callableStatement
 
+
     # Registers the OUT parameter in ordinal position parameterIndex to the JDBC type sqlType.
     # 
     # @param [int] index parameter position. first parameter is 1, second 2 ...
@@ -24,6 +25,28 @@ class CallableStatement extends PreparedStatement
     #   In short ; just pass the string representation of the type name 
     registerOutParameter: (index, type) ->
         @callableStatement.registerOutParameter index, @getType(type)
+
+
+    # @sync
+    # 
+    # Retrieves the value of the designated JDBC CHAR, 
+    # VARCHAR, or LONGVARCHAR parameter as a string
+    #
+    # @param index parameter position. first parameter is 1, second 2 ... 
+    # @return [string] get parameter value as string      
+    getString: (index) ->
+        @callableStatement.getStringSync index    
+
+
+    # @sync
+    # 
+    # Retrieves the value of the designated JDBC CHAR, 
+    # VARCHAR, or LONGVARCHAR parameter as an integer
+    # 
+    # @param index parameter position. first parameter is 1, second 2 ... 
+    # @return [int] get parameter value as integer      
+    getInt: (index) ->
+        @callableStatement.getIntSync index    
 
     
     # returns int representation of the type
