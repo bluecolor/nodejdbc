@@ -7,6 +7,7 @@ Promise = require 'bluebird'
 # cursor one position forward 
 module.exports = 
 class ResultSet
+    
     # Constructor method
     # 
     # @param [Object] resultSet
