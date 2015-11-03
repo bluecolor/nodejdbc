@@ -8,6 +8,7 @@ ResultSet = require './resultset'
 # and created a new result set  
 module.exports = 
 class Statement
+    
     # constructor method
     #
     # @param [Object] statement
