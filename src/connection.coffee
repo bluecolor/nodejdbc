@@ -1,8 +1,9 @@
 Statement = require './statement' 
+CallableStatement = require './callablestatement'
 Promise = require 'bluebird'
 
 
-# Connection object to a datasource. @see {ESDBC#config}
+# Connection object to a datasource. @see {NodeJDBC#config}
 # Queries and methods are executed using a connection object.
 module.exports = 
 class Connection
@@ -42,7 +43,18 @@ class Connection
     # @return [PreparedStatement] a promise that returs a PreparedStatement object           
     prepareStatement: (sql) ->
          @connection.prepareStatementAsync(sql).then (preparedStatement)->
-            return new PreparedStatement(preparedStatement)            
+            return new PreparedStatement(preparedStatement)       
+
+
+    # Creates a CallableStatement object for calling database stored procedures.
+    #         
+    # @param [String] call stored procedure call expression
+    #   @example "{call PROC_NAME(?, ?, ?)}" 
+    #
+    # @return [CallableStatement] a promise that returs a CallableStatement object
+    prepareCall: (call) ->
+        @connection.prepareCallAsync(call).then (callableStatement)->
+            return new CallableStatement(callableStatement)                            
 
 
     # Persists the changes to the datasource from the last commit.

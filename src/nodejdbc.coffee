@@ -38,7 +38,7 @@ class NodeJDBC
     # 
     # @return [Connection] A promise that returns a new Connection object
     newConnection: ->
-        conn = java.callStaticMethodAsync 'java.sql.DriverManager', 'getConnection', @config.url, @config.user, @config.password    
+        conn = java.callStaticMethodAsync 'java.sql.DriverManager', 'getConnection', @config.url, @config.username, @config.password    
         conn.then (connection) ->
             new Connection(connection)
 
