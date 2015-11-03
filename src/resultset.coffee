@@ -7,21 +7,24 @@ Promise = require 'bluebird'
 # cursor one position forward 
 module.exports = 
 class ResultSet
-    
+
     # Constructor method
     # 
     # @param [Object] resultSet
     constructor: ( resultSet ) ->
         @resultSet = Promise.promisifyAll resultSet
     
+
     # Moves the cursor ,that points to resutset data record, one position forward.
     # this method executed synchronously 
     next: ->
         @resultSet.nextSync()    
 
+
     # Gets the given column's value as String    
     getString: (column) ->
         @resultSet.getStringSync(column)
+
     
     # Gets the given column's value as int
     getInt: (column) ->

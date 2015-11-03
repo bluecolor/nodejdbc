@@ -12,11 +12,13 @@ class ResultSetMetaData
     constructor: ( resultSetMetaData ) ->
         @resultSetMetaData = Promise.promisifyAll resultSetMetaData
     
+    
     # Returns number of columns in the result set
     #
     # @return [int]
     getColumnCount: ->
         @resultSetMetaData.getColumnCountSync()    
+
 
     # Returns the given columns name
     # 

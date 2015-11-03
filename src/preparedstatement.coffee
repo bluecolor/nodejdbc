@@ -14,6 +14,7 @@ class PreparedStatement
     constructor: (preparedStatement) ->
         @preparedStatement = Promise.promisifyAll preparedStatement
     
+
     # Binds a string value to the parameter with the `index`
     #
     # @param [int] index order of the paratemer to be binded indexes starts at 1
@@ -21,12 +22,14 @@ class PreparedStatement
     setString: (index,value) ->
         @preparedStatement.setStringSync(index,value)        
 
+
     # Binds a int value to the parameter with the `index`
     #
     # @param [int] index order of the paratemer to be binded indexes starts at 1
     # @param [int] value int value of the parameter
     setInt: (index,value) ->
         @preparedStatement.setIntSync(index,value)             
+
 
     # executes DDL(Data Definition Language) or DML(Data Manipulation Language) statements
     # if DDL statement is executed returns nothing else returns the number of 
@@ -40,11 +43,13 @@ class PreparedStatement
     executeUpdate: ->
         @preparedStatement.executeUpdateAsync
 
+
     # Same as {Statement.executeUpdate} except it runs synchronously  and returns result directly 
     #
     # @return [int] 
     executeUpdateSync: ->
         @preparedStatement.executeUpdateAsync            
+
 
     # Execute given SQL statement and return a promise to the result set
     # 
@@ -54,6 +59,7 @@ class PreparedStatement
     executeQuery: ->
         @preparedStatement.executeQueryAsync().then (resultSet) ->
             new ResultSet(resultSet)            
+
 
     # Closes the statement and frees the resources immediately.        
     close: ->
