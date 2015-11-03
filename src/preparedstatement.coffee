@@ -41,14 +41,14 @@ class PreparedStatement
     # 
     # @return [int] a promise that returns the result of the executed statement
     executeUpdate: ->
-        @preparedStatement.executeUpdateAsync
+        @preparedStatement.executeUpdateAsync()
 
 
     # Same as {Statement.executeUpdate} except it runs synchronously  and returns result directly 
     #
     # @return [int] 
     executeUpdateSync: ->
-        @preparedStatement.executeUpdateAsync            
+        @preparedStatement.executeUpdateAsync()          
 
 
     # Execute given SQL statement and return a promise to the result set
