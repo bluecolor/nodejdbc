@@ -12,7 +12,7 @@ class Statement
     # constructor method
     #
     # @param [Object] statement
-    constructor: ( statement ) ->
+    constructor: (statement) ->
         @statement = Promise.promisifyAll statement
     
     # executes DDL(Data Definition Language) or DML(Data Manipulation Language) statements
