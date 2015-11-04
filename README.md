@@ -356,6 +356,128 @@ read().then (result) ->
     console.log result
 ```
 
+# Stored Procedure Call
+
+It is time to call stored procedures. For that section 
+you can use any database that allows you to write stored procedures. 
+Make sure you have the appropriate JDBC driver and able to connect to your database and have the 
+the necessary permissions granted to your user.
+
+The following example shows how to call a procedure in oracle db. To start with; we can create
+a package that will contain the procedures ,we will be calling using `NodeJDBC`  
+
+Without too much detail, 
+example oracle db configuration is like;
+
+* jdbc url: jdbc:oracle:thin:@//win:1521/orcl 
+* user name : demo
+* password  : demo
+
+The name of our package will be `PKG_OUTLAW`  
+
+and the package spec. for `DEMO.PKG_OUTLAW` is;
+
+```sql
+create or replace package DEMO.PKG_OUTLAW
+as
+    procedure PRC_FLIP_COIN(guess in varchar2, result out varchar2, message out varchar2);
+end;
+
+```
+
+package body of `DEMO.PKG_OUTLAW` is;
+
+```sql
+create or replace package body DEMO.PKG_OUTLAW
+IS
+    
+    -- procedure PRC_FLIP_COIN
+    -- Flips a coin and returns result and the message 
+    -- 
+    -- @param [in] [varchar2] guess your guess it can be either 'Heads' or 'Tails' (case insensitve)
+    -- @param [out][varchar2] result result of the coin toss. can be 'Heads' or 'Tails'
+    -- @param [out][varchar2] message text about game result
+    procedure PRC_FLIP_COIN(guess in varchar2, result out varchar2, message out varchar2)
+    is
+        one_two int;  
+        type result_set IS TABLE OF VARCHAR2(5);
+        heads_tails result_set := result_set('HEADS','TAILS');
+    begin
+        
+        if not ( upper(guess) member of heads_tails )
+        then  
+            result  := 'Upright';
+            message := 'Please pass only "HEADS" or "TAILS" as input';
+            return;
+        end if;
+        
+        one_two := round(dbms_random.value) + 1;
+        result  := initcap(heads_tails(one_two));
+        message := case upper(result) when upper(guess) then 'Nice Shot! You Win' else 'Sorry! You Lost' end;
+        
+    end;
+
+end;
+
+```
+
+This is a simple coin toss example.The procedure `PRC_FLIP_COIN` takes three arguments 
+
+* `guess in varchar2`    input parameter guess, which can be either 'Heads' or 'Tails' (case insensitve)
+* `result out varchar2`  output parameter result, can be 'Heads' or 'Tails'
+* `message out varchar2` output parameter message, text about game result
+
+Afer you have compiled the package successfuly. You can test the `PRC_FLIP_COIN` in `plsq` with
+```sql
+declare 
+    result  varchar2(100);
+    message varchar2(100);
+begin
+  DEMO.PKG_OUTLAW.PRC_FLIP_COIN('Heads',result,message);
+  
+  dbms_output.put_line('Result : ' || result);
+  dbms_output.put_line('Message: ' || message);
+  
+end;
+``` 
+
+Now, we can write the above script with `NodeJDBC` like;
+
+```coffeescript
+config =
+    libs : ['test/lib/ojdbc7.jar']
+    className: 'oracle.jdbc.driver.OracleDriver'
+    url: 'jdbc:oracle:thin:@//win:1521/orcl',
+    username: 'demo',
+    password: 'demo'
+
+nodejdbc = new NodeJDBC(config)
+
+nodejdbc.getConnection().then (connection) ->    
+    call = '{call demo.pkg_outlaw.prc_flip_coin(?,?,?)}'
+    connection.prepareCall(call).then (statement) ->
+        statement.setString 1, 'Heads'
+        statement.registerOutParameter 2,'VARCHAR'
+        statement.registerOutParameter 3,'VARCHAR'
+        statement.executeUpdate().then ()->
+            console.log "Result : #{statement.getString 2 }"
+            console.log "Message: #{statement.getString 3 }"
+            connection.close()
+```  
+
+If you are lucky,this should print
+
+```bash
+Result : Heads
+Message: Nice Shot! You Win 
+```
+
+
+
+
+
+
+
 These examples are also available in the repository on a single file *test.coffee*.
 
 # API Docs

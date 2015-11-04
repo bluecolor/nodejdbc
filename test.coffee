@@ -277,3 +277,4 @@ nodejdbc.getConnection().then (connection) ->
             console.log "Result : #{statement.getString 2 }"
             console.log "Message: #{statement.getString 3 }"
             connection.close()
+
