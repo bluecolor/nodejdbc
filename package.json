@@ -2,7 +2,7 @@
   "author": "bluecolor",
   "license": "ISC",
   "name": "nodejdbc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JDBC API wrapper for nodejs",
   "main": "lib/nodejdbc.js",
   "scripts": {
