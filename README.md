@@ -9,7 +9,7 @@ nodejdbc tries to wrap JDBC API and provide a consistent way of accessing relati
 
 ## Installation
 
-make install nodejdbc
+`make install nodejdbc`
 
 ## Building
 
