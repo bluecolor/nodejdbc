@@ -34,8 +34,8 @@
         </p>
       </nav>
       <div id='filecontents'>
-        <h1 id="nodejdbc">nodejdbc</h1><p>JDBC API wrapper for nodejs</p><p>A promise based JDBC wrapper for nodejs. Uses <a href="https://github.com/petkaantonov/bluebird">bluebird</a> for promise integration and <a href="https://github.com/joeferner/node-java">node-java</a> for calling java methods.</p><p>One of the good things about java is its standard JDBC API. JDBC API provides a standard way for the client applications to access a data source. It has interface methods that enable clients to perform DDL(Data Definition Language) or DML(Data Manipulation Language) operations on the target data source. JDBC is oriented towards relational database systems. </p><p>nodejdbc tries to wrap JDBC API and provide a consistent way of accessing relational database systems. nodejdbc API also tries to extend JDBC API by introducing new methods</p><h2 id="installation">Installation</h2><p>At the moment nodejdbc api is only available for local builds.
-You can clone the repository and execute <code>make build</code> under project folder.</p><ul>
+        <h1 id="nodejdbc">nodejdbc</h1><p>JDBC API wrapper for nodejs</p><p>A promise based JDBC wrapper for nodejs. Uses <a href="https://github.com/petkaantonov/bluebird">bluebird</a> for promise integration and <a href="https://github.com/joeferner/node-java">node-java</a> for calling java methods.</p><p>One of the good things about java is its standard JDBC API. JDBC API provides a standard way for the client applications to access a data source. It has interface methods that enable clients to perform DDL(Data Definition Language) or DML(Data Manipulation Language) operations on the target data source. JDBC is oriented towards relational database systems. </p><p>nodejdbc tries to wrap JDBC API and provide a consistent way of accessing relational database systems. nodejdbc API also tries to extend JDBC API by introducing new methods</p><h2 id="installation">Installation</h2><p><code>npm install nodejdbc</code></p><h2 id="building">Building</h2>
+<ul>
 <li>make sure <code>git</code> is installed</li>
 <li><code>cd path/to/install/directory</code></li>
 <li><code>git clone https://github.com/blue-color/nodejdbc.git</code> </li>
@@ -302,7 +302,86 @@ dropClean().then(create).then(load).then(deleteClean)
 and returns result like <code>read(sql)</code></p><pre><code class="lang-coffeescript"># Read
 read().then (result) -&gt;
     console.log result
-</code></pre><p>These examples are also available in the repository on a single file <em>test.coffee</em>.</p><h1 id="api-docs">API Docs</h1><p>API docs are located under <code>doc</code> folder. Thanks to <a href="https://github.com/coffeedoc/codo">codo</a>
+</code></pre>
+<h1 id="stored-procedure-call">Stored Procedure Call</h1><p>It is time to call stored procedures. For that section 
+you can use any database that allows you to write stored procedures. 
+Make sure you have the appropriate JDBC driver and able to connect to your database and have the 
+the necessary permissions granted to your user.</p><p>The following example shows how to call a procedure in oracle db. To start with; we can create
+a package that will contain the procedures ,we will be calling using <code>NodeJDBC</code>  </p><p>Without too much detail, 
+example oracle db configuration is like;</p><ul>
+<li>jdbc url: jdbc:oracle:thin:@//win:1521/orcl </li>
+<li>user name : demo</li>
+<li>password  : demo</li>
+</ul><p>The name of our package will be <code>PKG_OUTLAW</code>  </p><p>and the package spec. for <code>DEMO.PKG_OUTLAW</code> is;</p><pre><code class="lang-sql">create or replace package DEMO.PKG_OUTLAW
+as
+    procedure PRC_FLIP_COIN(guess in varchar2, result out varchar2, message out varchar2);
+end;
+</code></pre><p>package body of <code>DEMO.PKG_OUTLAW</code> is;</p><pre><code class="lang-sql">create or replace package body DEMO.PKG_OUTLAW
+IS
+
+    -- procedure PRC_FLIP_COIN
+    -- Flips a coin and returns result and the message 
+    -- 
+    -- @param [in] [varchar2] guess your guess it can be either &#39;Heads&#39; or &#39;Tails&#39; (case insensitve)
+    -- @param [out][varchar2] result result of the coin toss. can be &#39;Heads&#39; or &#39;Tails&#39;
+    -- @param [out][varchar2] message text about game result
+    procedure PRC_FLIP_COIN(guess in varchar2, result out varchar2, message out varchar2)
+    is
+        one_two int;  
+        type result_set IS TABLE OF VARCHAR2(5);
+        heads_tails result_set := result_set(&#39;HEADS&#39;,&#39;TAILS&#39;);
+    begin
+
+        if not ( upper(guess) member of heads_tails )
+        then  
+            result  := &#39;Upright&#39;;
+            message := &#39;Please pass only &quot;HEADS&quot; or &quot;TAILS&quot; as input&#39;;
+            return;
+        end if;
+
+        one_two := round(dbms_random.value) + 1;
+        result  := initcap(heads_tails(one_two));
+        message := case upper(result) when upper(guess) then &#39;Nice Shot! You Win&#39; else &#39;Sorry! You Lost&#39; end;
+
+    end;
+
+end;
+</code></pre><p>This is a simple coin toss example.The procedure <code>PRC_FLIP_COIN</code> takes three arguments </p><ul>
+<li><code>guess in varchar2</code>    input parameter guess, which can be either &#39;Heads&#39; or &#39;Tails&#39; (case insensitve)</li>
+<li><code>result out varchar2</code>  output parameter result, can be &#39;Heads&#39; or &#39;Tails&#39;</li>
+<li><code>message out varchar2</code> output parameter message, text about game result</li>
+</ul><p>Afer you have compiled the package successfuly. You can test the <code>PRC_FLIP_COIN</code> in <code>plsq</code> with</p><pre><code class="lang-sql">declare 
+    result  varchar2(100);
+    message varchar2(100);
+begin
+  DEMO.PKG_OUTLAW.PRC_FLIP_COIN(&#39;Heads&#39;,result,message);
+
+  dbms_output.put_line(&#39;Result : &#39; || result);
+  dbms_output.put_line(&#39;Message: &#39; || message);
+
+end;
+</code></pre><p>Now, we can write the above script with <code>NodeJDBC</code> like;</p><pre><code class="lang-coffeescript">config =
+    libs : [&#39;test/lib/ojdbc7.jar&#39;]
+    className: &#39;oracle.jdbc.driver.OracleDriver&#39;
+    url: &#39;jdbc:oracle:thin:@//win:1521/orcl&#39;,
+    username: &#39;demo&#39;,
+    password: &#39;demo&#39;
+
+nodejdbc = new NodeJDBC(config)
+
+nodejdbc.getConnection().then (connection) -&gt;    
+    call = &#39;{call demo.pkg_outlaw.prc_flip_coin(?,?,?)}&#39;
+    connection.prepareCall(call).then (statement) -&gt;
+        statement.setString 1, &#39;Heads&#39;
+        statement.registerOutParameter 2,&#39;VARCHAR&#39;
+        statement.registerOutParameter 3,&#39;VARCHAR&#39;
+        statement.executeUpdate().then ()-&gt;
+            console.log &quot;Result : #{statement.getString 2 }&quot;
+            console.log &quot;Message: #{statement.getString 3 }&quot;
+            connection.close()
+</code></pre><p>If you are lucky,this should print</p><pre><code class="lang-bash">Result : Heads
+Message: Nice Shot! You Win
+</code></pre><p>These examples are also available in the repository on a single file <a href="https://github.com/blue-color/nodejdbc/blob/master/test.coffee">test.coffee</a></p><h1 id="api-docs">API Docs</h1><p>API docs are located under <code>doc</code> folder. Thanks to <a href="https://github.com/coffeedoc/codo">codo</a>
 to generate API docs just run;</p><pre><code class="lang-bash">make docs
 </code></pre>
 <h1 id="tests">Tests</h1><p>Unit tests are located under test folder. You&#39;ll need <a href="https://github.com/mochajs/mocha">mocha</a> to execute  unit tests. Run the tests with</p><pre><code class="lang-bash">make build
@@ -317,7 +396,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot; AND THE AUTHOR DISCLAIMS ALL WARRANTI
       </div>
     </div>
     <div id='footer'>
-  November 04, 15 11:16:24 by
+  November 04, 15 14:54:35 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
