@@ -428,7 +428,7 @@ This is a simple coin toss example.The procedure `PRC_FLIP_COIN` takes three arg
 * `message out varchar2` output parameter message, text about game result
 
 Afer you have compiled the package successfuly. You can test the `PRC_FLIP_COIN` in `plsq` with
-```sql
+```plsql
 declare 
     result  varchar2(100);
     message varchar2(100);
@@ -478,7 +478,7 @@ Message: Nice Shot! You Win
 
 
 
-These examples are also available in the repository on a single file *test.coffee*.
+These examples are also available in the repository on a single file [test.coffee](https://github.com/blue-color/nodejdbc/blob/master/test.coffee)
 
 # API Docs
 API docs are located under `doc` folder. Thanks to [codo](https://github.com/coffeedoc/codo)
