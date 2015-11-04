@@ -465,7 +465,7 @@ nodejdbc.getConnection().then (connection) ->
             connection.close()
 ```  
 
-If you are lucky,this should print
+If you are lucky, this should print
 
 ```bash
 Result : Heads
