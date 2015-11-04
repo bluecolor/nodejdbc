@@ -11,8 +11,7 @@ docs:
 clean-docs:
 	rm -rf docs/
 
-clean: 
-	clean-docs
+clean: clean-docs
 	rm -fr lib/ test/*.js
 
 build:
@@ -21,9 +20,10 @@ build:
 test:
 	cd test && mocha test.js && cd ../
 
-# dist: 
-# 	clean init docs build test
+dist: clean init docs build test
 
-# publish: 
-# 	dist
-# 	npm publish
+publish: dist
+	npm publish
+
+publish-beta: dist
+	npm publish --tag beta	

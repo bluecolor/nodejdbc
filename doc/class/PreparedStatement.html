@@ -33,6 +33,10 @@
           <td>src&#47;preparedstatement.coffee</td>
         </tr>
       </table>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../class/CallableStatement.html'>CallableStatement</a>
+      </p>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
   <li>
@@ -44,6 +48,7 @@
       </a>
     </span>
     <span class='desc'>
+      Binds a string value to the parameter with the <code>index</code> 
     </span>
   </li>
   <li>
@@ -55,39 +60,44 @@
       </a>
     </span>
     <span class='desc'>
+      Binds a int value to the parameter with the <code>index</code> 
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#executeUpdate-dynamic'>
         #
-(void)
+(int)
 <b>executeUpdate</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
+      <p>executes DDL(Data Definition Language) or DML(Data Manipulation Language) statements if DDL statement is executed returns nothing else returns the number of 
+manipulated(inserted,updated,deleted) records</p>
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#executeUpdateSync-dynamic'>
         #
-(void)
+(int)
 <b>executeUpdateSync</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
+      Same as {Statement.executeUpdate} except it runs synchronously  and returns result directly 
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#executeQuery-dynamic'>
         #
-(void)
+(ResultSet)
 <b>executeQuery</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
+      Execute given SQL statement and return a promise to the result set <p>@param SQL statment to be executed @example &#39;SELECT COLUMN_A from MY_TABLE&#39;</p>
     </span>
   </li>
   <li>
@@ -99,6 +109,7 @@
       </a>
     </span>
     <span class='desc'>
+      Closes the statement and frees the resources immediately. 
     </span>
   </li>
 </ul>
@@ -111,7 +122,22 @@
 <b>constructor</b><span>(preparedStatement)</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>constructor method</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>preparedStatement</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+    </li>
+  </ul>
+</div>
   </div>
 </div>
       <h2>Instance Method Details</h2>
@@ -123,7 +149,34 @@
 <b>setString</b><span>(index, value)</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>Binds a string value to the parameter with the <code>index</code></p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>index</span>
+      <span class='type'>
+        (
+          <tt>int</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>order of the paratemer to be binded indexes starts at 1 </span>
+    </li>
+    <li>
+      <span class='name'>value</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>string value of the parameter </span>
+    </li>
+  </ul>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='setInt-dynamic'>
@@ -132,34 +185,117 @@
 <b>setInt</b><span>(index, value)</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>Binds a int value to the parameter with the <code>index</code></p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>index</span>
+      <span class='type'>
+        (
+          <tt>int</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>order of the paratemer to be binded indexes starts at 1 </span>
+    </li>
+    <li>
+      <span class='name'>value</span>
+      <span class='type'>
+        (
+          <tt>int</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>int value of the parameter </span>
+    </li>
+  </ul>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='executeUpdate-dynamic'>
       #
-(void)
+(int)
 <b>executeUpdate</b><span>()</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>executes DDL(Data Definition Language) or DML(Data Manipulation Language) statements
+if DDL statement is executed returns nothing else returns the number of 
+manipulated(inserted,updated,deleted) records</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>sql</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>SQL statement to be executed @example &#39;SELECT COLUMN_A from MY_TABLE&#39;  @example &#39;DROP TABLE MY_TABLE&#39;   </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>int</tt>
+      )
+      &mdash;
+      <span class='desc'>a promise that returns the result of the executed statement </span>
+    </li>
+  </ul>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='executeUpdateSync-dynamic'>
       #
-(void)
+(int)
 <b>executeUpdateSync</b><span>()</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>Same as {Statement.executeUpdate} except it runs synchronously  and returns result directly</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>int</tt>
+    </li>
+  </ul>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='executeQuery-dynamic'>
       #
-(void)
+(ResultSet)
 <b>executeQuery</b><span>()</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>Execute given SQL statement and return a promise to the result set</p><p>@param SQL statment to be executed @example &#39;SELECT COLUMN_A from MY_TABLE&#39;</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/ResultSet.html'>ResultSet</a></tt>
+      )
+      &mdash;
+      <span class='desc'>a promise that returns ResultSet        </span>
+    </li>
+  </ul>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='close-dynamic'>
@@ -168,12 +304,16 @@
 <b>close</b><span>()</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>Closes the statement and frees the resources immediately.</p>
+</div>
+<div class='tags'>
+</div>
   </div>
 </div>
     </div>
     <div id='footer'>
-  November 02, 15 19:30:01 by
+  November 04, 15 11:16:24 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>

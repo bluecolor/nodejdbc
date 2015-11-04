@@ -35,7 +35,7 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>Connection object to a datasource. @see {ESDBC#config}
+  <p>Connection object to a datasource. @see {NodeJDBC#config}
 Queries and methods are executed using a connection object.</p>
 </div>
 <div class='tags'>
@@ -76,6 +76,18 @@ Queries and methods are executed using a connection object.</p>
     </span>
     <span class='desc'>
       Creates a PreparedStatement for executing SQL statements with or without parameter binding. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#prepareCall-dynamic'>
+        #
+(CallableStatement)
+<b>prepareCall</b><span>(call)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Creates a CallableStatement object for calling database stored procedures. 
     </span>
   </li>
   <li>
@@ -251,6 +263,43 @@ is executed.</p>
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='prepareCall-dynamic'>
+      #
+(CallableStatement)
+<b>prepareCall</b><span>(call)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Creates a CallableStatement object for calling database stored procedures.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>call</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>stored procedure call expression @example &quot;{call PROC_NAME(?, ?, ?)}&quot;  </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/CallableStatement.html'>CallableStatement</a></tt>
+      )
+      &mdash;
+      <span class='desc'>a promise that returs a CallableStatement object </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='commit-dynamic'>
       #
 (void)
@@ -344,7 +393,7 @@ This method throws exception if the auto-commit mode is on.</p>
 </div>
     </div>
     <div id='footer'>
-  November 02, 15 19:30:01 by
+  November 04, 15 11:16:24 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>

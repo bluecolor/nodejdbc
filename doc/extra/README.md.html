@@ -302,7 +302,12 @@ dropClean().then(create).then(load).then(deleteClean)
 and returns result like <code>read(sql)</code></p><pre><code class="lang-coffeescript"># Read
 read().then (result) -&gt;
     console.log result
-</code></pre><p>These examples are also available in the repository on a single file <em>test.coffee</em>.</p><h1 id="getting-help">Getting Help</h1><p>Use <a href="https://github.com/blue-color/nodejdbc/issues">issues</a> with appropriate labels for;</p><ul>
+</code></pre><p>These examples are also available in the repository on a single file <em>test.coffee</em>.</p><h1 id="api-docs">API Docs</h1><p>API docs are located under <code>doc</code> folder. Thanks to <a href="https://github.com/coffeedoc/codo">codo</a>
+to generate API docs just run;</p><pre><code class="lang-bash">make docs
+</code></pre>
+<h1 id="tests">Tests</h1><p>Unit tests are located under test folder. You&#39;ll need <a href="https://github.com/mochajs/mocha">mocha</a> to execute  unit tests. Run the tests with</p><pre><code class="lang-bash">make build
+make test
+</code></pre><p>Make sure you have the followind <code>test/lib/sqlite-jdbc-3.8.11.2.jar</code> .</p><h1 id="getting-help">Getting Help</h1><p>Use <a href="https://github.com/blue-color/nodejdbc/issues">issues</a> with appropriate labels for;</p><ul>
 <li>Bugs</li>
 <li>Feature requests</li>
 <li>Questions</li>
@@ -312,7 +317,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot; AND THE AUTHOR DISCLAIMS ALL WARRANTI
       </div>
     </div>
     <div id='footer'>
-  November 02, 15 19:30:01 by
+  November 04, 15 11:16:24 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>

@@ -8,8 +8,10 @@ One of the good things about java is its standard JDBC API. JDBC API provides a 
 nodejdbc tries to wrap JDBC API and provide a consistent way of accessing relational database systems. nodejdbc API also tries to extend JDBC API by introducing new methods
 
 ## Installation
-At the moment nodejdbc api is only available for local builds.
-You can clone the repository and execute `make build` under project folder.
+
+make install nodejdbc
+
+## Building
 
 * make sure `git` is installed
 * `cd path/to/install/directory`
