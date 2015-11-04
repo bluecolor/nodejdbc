@@ -428,7 +428,7 @@ This is a simple coin toss example.The procedure `PRC_FLIP_COIN` takes three arg
 * `message out varchar2` output parameter message, text about game result
 
 Afer you have compiled the package successfuly. You can test the `PRC_FLIP_COIN` in `plsq` with
-```plsql
+```sql
 declare 
     result  varchar2(100);
     message varchar2(100);
