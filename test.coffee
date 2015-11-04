@@ -268,8 +268,12 @@ nodejdbc = new NodeJDBC(config)
 nodejdbc.getConnection().then (connection) ->
     console.log 'conn is valid', connection.isValid(2)
     
-    call = '{call demo.demo_1()}'
+    call = '{call demo.pkg_outlaw.prc_flip_coin(?,?,?)}'
     connection.prepareCall(call).then (statement) ->
-        # console.log statement
+        statement.setString 1, 'Heads'
+        statement.registerOutParameter 2,'VARCHAR'
+        statement.registerOutParameter 3,'VARCHAR'
         statement.executeUpdate().then ()->
+            console.log "Result : #{statement.getString 2 }"
+            console.log "Message: #{statement.getString 3 }"
             connection.close()

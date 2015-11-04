@@ -24,7 +24,7 @@ class CallableStatement extends PreparedStatement
     #   The above examples apply to all types in java.sql.Type. 
     #   In short ; just pass the string representation of the type name 
     registerOutParameter: (index, type) ->
-        @callableStatement.registerOutParameter index, @getType(type)
+        @callableStatement.registerOutParameterSync index, @getType(type)
 
 
     # @sync
