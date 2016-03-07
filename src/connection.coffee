@@ -1,5 +1,6 @@
 Statement = require './statement' 
 CallableStatement = require './callablestatement'
+PreparedStatement = require './preparedstatement'
 Promise = require 'bluebird'
 
 
