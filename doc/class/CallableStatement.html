@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>nodejdbc</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Nodejdbc'>
+      Nodejdbc
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>CallableStatement</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        CallableStatement
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>src&#47;callablestatement.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../class/PreparedStatement.html'>PreparedStatement</a>
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>Connection object to a datasource. @see {NodeJDBC#config}
+Queries and methods are executed using a connection object.</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#registerOutParameter-dynamic'>
+        #
+(void)
+<b>registerOutParameter</b><span>(index, type)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Registers the OUT parameter in ordinal position parameterIndex to the JDBC type sqlType. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getString-dynamic'>
+        #
+(string)
+<b>getString</b><span>(index)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      @sync <p>Retrieves the value of the designated JDBC CHAR, 
+VARCHAR, or LONGVARCHAR parameter as a string</p><p>@param index parameter position.</p>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getInt-dynamic'>
+        #
+(int)
+<b>getInt</b><span>(index)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      @sync <p>Retrieves the value of the designated JDBC CHAR, 
+VARCHAR, or LONGVARCHAR parameter as an integer</p><p>@param index parameter position.</p>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getType-dynamic'>
+        #
+(int)
+<b>getType</b><span>(type)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      returns int representation of the type 
+    </span>
+  </li>
+</ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+        <h3 class='inherited'>
+          Methods inherited from
+          <a href='../class/PreparedStatement.html'>PreparedStatement</a>
+        </h3>
+        <p class='inherited'>
+          <a href='../class/PreparedStatement.html#setString-dynamic'>#setString</a>
+          <a href='../class/PreparedStatement.html#setInt-dynamic'>#setInt</a>
+          <a href='../class/PreparedStatement.html#setTimestamp-dynamic'>#setTimestamp</a>
+          <a href='../class/PreparedStatement.html#executeUpdate-dynamic'>#executeUpdate</a>
+          <a href='../class/PreparedStatement.html#executeUpdateSync-dynamic'>#executeUpdateSync</a>
+          <a href='../class/PreparedStatement.html#addBatch-dynamic'>#addBatch</a>
+          <a href='../class/PreparedStatement.html#addBatchSync-dynamic'>#addBatchSync</a>
+          <a href='../class/PreparedStatement.html#executeBatch-dynamic'>#executeBatch</a>
+          <a href='../class/PreparedStatement.html#executeBatchSync-dynamic'>#executeBatchSync</a>
+          <a href='../class/PreparedStatement.html#executeQuery-dynamic'>#executeQuery</a>
+          <a href='../class/PreparedStatement.html#close-dynamic'>#close</a>
+        </p>
+      </h2>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(callableStatement)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>constructor method</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>callableStatement</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>java callableStatement interface object </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='registerOutParameter-dynamic'>
+      #
+(void)
+<b>registerOutParameter</b><span>(index, type)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Registers the OUT parameter in ordinal position parameterIndex to the JDBC type sqlType.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>index</span>
+      <span class='type'>
+        (
+          <tt>int</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>parameter position. first parameter is 1, second 2 ... </span>
+    </li>
+    <li>
+      <span class='name'>sql</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>type identifier @see <a href="http://docs.oracle.com/javase/7/docs/api/java/sql/Types.html">java.sql.Types</a> @example for java.sql.Types.INTEGER just pass &#39;INTEGER&#39; @example for java.sql.Types.CHAR just pass &#39;CHAR&#39; The above examples apply to all types in java.sql.Type.  In short ; just pass the string representation of the type name  </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getString-dynamic'>
+      #
+(string)
+<b>getString</b><span>(index)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>@sync</p><p>Retrieves the value of the designated JDBC CHAR, 
+VARCHAR, or LONGVARCHAR parameter as a string</p><p>@param index parameter position. first parameter is 1, second 2 ...</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>string</tt>
+      )
+      &mdash;
+      <span class='desc'>get parameter value as string       </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getInt-dynamic'>
+      #
+(int)
+<b>getInt</b><span>(index)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>@sync</p><p>Retrieves the value of the designated JDBC CHAR, 
+VARCHAR, or LONGVARCHAR parameter as an integer</p><p>@param index parameter position. first parameter is 1, second 2 ...</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>int</tt>
+      )
+      &mdash;
+      <span class='desc'>get parameter value as integer       </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getType-dynamic'>
+      #
+(int)
+<b>getType</b><span>(type)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>returns int representation of the type</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>int</tt>
+      )
+      &mdash;
+      <span class='desc'>integer representation of the java.sql.Types.{TYPE} constant </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  March 08, 16 23:33:03 by
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.0.11
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>
