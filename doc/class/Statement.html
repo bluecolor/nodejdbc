@@ -84,6 +84,54 @@ manipulated(inserted,updated,deleted) records</p>
   </li>
   <li>
     <span class='signature'>
+      <a href='#addBatch-dynamic'>
+        #
+(void)
+<b>addBatch</b><span>(sql)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Adds a set of parameters to this PreparedStatement object&#39;s batch of commands. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addBatchSync-dynamic'>
+        #
+(void)
+<b>addBatchSync</b><span>(sql)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Adds a set of parameters to this PreparedStatement object&#39;s batch of commands. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#executeBatch-dynamic'>
+        #
+(?)
+<b>executeBatch</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Submits a batch of commands to the database for execution and if all commands execute successfully, returns an array of update counts. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#executeBatchSync-dynamic'>
+        #
+(void)
+<b>executeBatchSync</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      (see the jdbc doc)[<a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html#executeBatch(">https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html#executeBatch(</a>)] 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#close-dynamic'>
         #
 (void)
@@ -208,6 +256,73 @@ manipulated(inserted,updated,deleted) records</p>
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='addBatch-dynamic'>
+      #
+(void)
+<b>addBatch</b><span>(sql)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Adds a set of parameters to this PreparedStatement object&#39;s batch of commands.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addBatchSync-dynamic'>
+      #
+(void)
+<b>addBatchSync</b><span>(sql)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Adds a set of parameters to this PreparedStatement object&#39;s batch of commands.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='executeBatch-dynamic'>
+      #
+(?)
+<b>executeBatch</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Submits a batch of commands to the database for execution and if all commands execute successfully, returns an array of update counts. The int elements of the array that is returned are ordered to correspond to the commands in the batch, which are ordered according to the order in which they were added to the batch. The elements in the array returned by the method executeBatch may be one of the following:
+A number greater than or equal to zero -- indicates that the command was processed successfully and is an update count giving the number of rows in the database that were affected by the command&#39;s execution
+A value of SUCCESS_NO_INFO -- indicates that the command was processed successfully but that the number of rows affected is unknown
+If one of the commands in a batch update fails to execute properly, this method throws a BatchUpdateException, and a JDBC driver may or may not continue to process the remaining commands in the batch. However, the driver&#39;s behavior must be consistent with a particular DBMS, either always continuing to process commands or never continuing to process commands. If the driver continues processing after a failure, the array returned by the method BatchUpdateException.getUpdateCounts will contain as many elements as there are commands in the batch, and at least one of the elements will be the following:</p><p>A value of EXECUTE_FAILED -- indicates that the command failed to execute successfully and occurs only if a driver continues to process commands after a command fails
+The possible implementations and return values have been modified in the Java 2 SDK, Standard Edition, version 1.3 to accommodate the option of continuing to proccess commands in a batch update after a BatchUpdateException obejct has been thrown.</p><p>in the batch. The elements of the array are ordered according to the order in which commands were added to the batch.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>int[] an array of update counts containing one element for each command </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='executeBatchSync-dynamic'>
+      #
+(void)
+<b>executeBatchSync</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>(see the jdbc doc)[<a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html#executeBatch(">https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html#executeBatch(</a>)]</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='close-dynamic'>
       #
 (void)
@@ -223,7 +338,7 @@ manipulated(inserted,updated,deleted) records</p>
 </div>
     </div>
     <div id='footer'>
-  November 04, 15 14:59:22 by
+  March 08, 16 23:33:03 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
