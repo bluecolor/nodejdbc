@@ -74,6 +74,6 @@ class Statement
 
 
 
-# Closes the statement and frees the resources immediately.
+    # Closes the statement and frees the resources immediately.
     close: ->
         @statement.closeAsync()
