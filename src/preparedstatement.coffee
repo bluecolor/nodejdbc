@@ -17,7 +17,7 @@ class PreparedStatement
 
     # Binds a string value to the parameter with the `index`
     #
-    # @param [int] index order of the paratemer to be binded indexes starts at 1
+    # @param [int] index order of the parameter to be binded indexes starts at 1
     # @param [string] value string value of the parameter
     setString: (index,value) ->
         @preparedStatement.setStringSync(index,value)            
@@ -25,7 +25,7 @@ class PreparedStatement
 
     # Binds a int value to the parameter with the `index`
     #
-    # @param [int] index order of the paratemer to be binded indexes starts at 1
+    # @param [int] index order of the parameter to be binded indexes starts at 1
     # @param [int] value int value of the parameter
     setInt: (index,value) ->
         @preparedStatement.setIntSync(index,value)             
