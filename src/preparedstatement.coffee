@@ -82,7 +82,7 @@ class PreparedStatement
 
     # Execute given SQL statement and return a promise to the result set
     # 
-    # @param SQL statment to be executed @example 'SELECT COLUMN_A from MY_TABLE'
+    # @param SQL statement to be executed @example 'SELECT COLUMN_A from MY_TABLE'
     # 
     # @return [ResultSet] a promise that returns ResultSet       
     executeQuery: ->
