@@ -32,10 +32,9 @@ class ResultSet
         @resultSet.getIntSync(column)
 
 
-    # Gets the given column's value as a Date
+    # Gets the given column's value as a string representation of a JDBC timestamp
     getTimestamp: (column) ->
         timestamp = @resultSet.getTimestampSync(column)
-        # new Date(timestamp.getTimeSync())
         timestamp.toString()
 
 

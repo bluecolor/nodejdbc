@@ -35,10 +35,8 @@ class PreparedStatement
     # Binds a Timestamp value to the parameter with the `index`
     #
     # @param [int] index order of the paratemer to be binded indexes starts at 1
-    # @param [date] date value of the parameter
+    # @param [string] string representation of JDBC timestamp
     setTimestamp: (index,value) ->
-        # longValue = java.callStaticMethodSync('java.lang.Long', 'valueOf', String(value.getTime()));
-        # timestamp = java.newInstanceSync("java.sql.Timestamp", value.getYear(), value.getMonth(), value.getDay());
         timestamp = java.callStaticMethodSync("java.sql.Timestamp", 'valueOf', value);
         @preparedStatement.setTimestampSync(index,timestamp)
 
