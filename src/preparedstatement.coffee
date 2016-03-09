@@ -37,7 +37,7 @@ class PreparedStatement
     # @param [int] index order of the paratemer to be binded indexes starts at 1
     # @param [string] string representation of JDBC timestamp
     setTimestamp: (index,value) ->
-        timestamp = java.callStaticMethodSync("java.sql.Timestamp", 'valueOf', value);
+        timestamp = if value then java.callStaticMethodSync("java.sql.Timestamp", 'valueOf', value) else null
         @preparedStatement.setTimestampSync(index,timestamp)
 
 
