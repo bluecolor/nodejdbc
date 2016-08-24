@@ -54,9 +54,10 @@ class NodeJDBC
         if ! @_connection
           return @_connection = @newConnection()
         else
-          return @_connection = @_connection.then (c)->
+          return @_connection.then (c)->
             if c.isClosed() and createIfClosed==yes
-              return  me.newConnection()
+              me._connection = me.newConnection()
+              return me._connection
             else
               return me._connection
 
