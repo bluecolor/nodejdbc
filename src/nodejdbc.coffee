@@ -49,10 +49,11 @@ class NodeJDBC
     # @return [Connection] A promise that returns a Connection object
     getConnection: (createIfClosed=no)->
         if ! @_connection
-        else if @_connection.isClosed() and createIfClosed==yes   
-            return @_connection = newConnection()
+          return @_connection = newConnection()
+        else if @_connection.isClosed() and createIfClosed==yes
+          return @_connection = newConnection()
         else
-            return @_connection
+          return @_connection
 
     # Each time creates a statement from given configuration.
     # This is rather a shorthand method. Instead directly create statement in your code
