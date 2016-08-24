@@ -42,18 +42,23 @@ class NodeJDBC
         conn.then (connection) ->
             new Connection(connection)
 
-
     # Create or return existing connection object if it is created before.
     # @see {NodeJDBC.newConnection}
     #
     # @return [Connection] A promise that returns a Connection object
     getConnection: (createIfClosed=no)->
+
+        con = @_connection
+        me  = this
+
         if ! @_connection
           return @_connection = @newConnection()
-        else if @_connection.isClosed() and createIfClosed==yes
-          return @_connection = @newConnection()
         else
-          return @_connection
+          return @_connection = @_connection.then (c)->
+            if c.isClosed() and createIfClosed==yes
+              return  me.newConnection()
+            else
+              return me.__connection
 
     # Each time creates a statement from given configuration.
     # This is rather a shorthand method. Instead directly create statement in your code
