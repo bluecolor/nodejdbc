@@ -58,7 +58,7 @@ class NodeJDBC
             if c.isClosed() and createIfClosed==yes
               return  me.newConnection()
             else
-              return me.__connection
+              return me._connection
 
     # Each time creates a statement from given configuration.
     # This is rather a shorthand method. Instead directly create statement in your code
