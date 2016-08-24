@@ -37,7 +37,7 @@ class NodeJDBC
     # Use {NodeJDBC#getConnection} for creating and reusing connections.
     #
     # @return [Connection] A promise that returns a new Connection object
-    newConnection= ->
+    newConnection: ->
         conn = java.callStaticMethodAsync 'java.sql.DriverManager', 'getConnection', @config.url, @config.username, @config.password
         conn.then (connection) ->
             new Connection(connection)
@@ -49,9 +49,9 @@ class NodeJDBC
     # @return [Connection] A promise that returns a Connection object
     getConnection: (createIfClosed=no)->
         if ! @_connection
-          return @_connection = newConnection()
+          return @_connection = @newConnection()
         else if @_connection.isClosed() and createIfClosed==yes
-          return @_connection = newConnection()
+          return @_connection = @newConnection()
         else
           return @_connection
 
