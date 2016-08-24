@@ -59,23 +59,10 @@ Basically initializes configuration and supplies connection object</p>
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#newConnection-dynamic'>
-        #
-(Connection)
-<b>newConnection</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
-      Each time creates new connection to the given datasource! Use <a href='../class/NodeJDBC.html#getConnection-dynamic'>NodeJDBC#getConnection</a> for creating and reusing connections.
-
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#getConnection-dynamic'>
         #
 (Connection)
-<b>getConnection</b><span>()</span>
+<b>getConnection</b><span>(createIfClosed = false)</span>
       </a>
     </span>
     <span class='desc'>
@@ -185,7 +172,7 @@ Also validates the given configuration object</p>
         )
       </span>
       &mdash;
-      <span class='desc'>list of libraries that will be added to classpath. driver jars are specified here. If you want to extend NodeJDBC and use other java libraries you can also suply additional jars here.  @example [&#39;lib/sqlite-jdbc-3.8.11.2.jar&#39;,&#39;commons-collections-3.2.1.jar&#39;] </span>
+      <span class='desc'>list of libraries that will be added to classpath. driver jars are specified here. If you want to extend NodeJDBC and use other java libraries you can also suply additional jars here. @example [&#39;lib/sqlite-jdbc-3.8.11.2.jar&#39;,&#39;commons-collections-3.2.1.jar&#39;] </span>
     </li>
     <li>
       <span class='name'>className</span>
@@ -205,7 +192,7 @@ Also validates the given configuration object</p>
         )
       </span>
       &mdash;
-      <span class='desc'>jdbc url @example &#39;jdbc:sqlite:test.db&#39;     </span>
+      <span class='desc'>jdbc url @example &#39;jdbc:sqlite:test.db&#39; </span>
     </li>
   </ul>
 </div>
@@ -214,35 +201,10 @@ Also validates the given configuration object</p>
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='newConnection-dynamic'>
-      #
-(Connection)
-<b>newConnection</b><span>()</span>
-      <br>
-    </p>
-    <div class='docstring'>
-  <p>Each time creates new connection to the given datasource!
-Use <a href='../class/NodeJDBC.html#getConnection-dynamic'>NodeJDBC#getConnection</a> for creating and reusing connections.</p>
-</div>
-<div class='tags'>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      (
-        <tt><a href='../class/Connection.html'>Connection</a></tt>
-      )
-      &mdash;
-      <span class='desc'>A promise that returns a new Connection object </span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='getConnection-dynamic'>
       #
 (Connection)
-<b>getConnection</b><span>()</span>
+<b>getConnection</b><span>(createIfClosed = false)</span>
       <br>
     </p>
     <div class='docstring'>
@@ -257,7 +219,7 @@ Use <a href='../class/NodeJDBC.html#getConnection-dynamic'>NodeJDBC#getConnectio
         <tt><a href='../class/Connection.html'>Connection</a></tt>
       )
       &mdash;
-      <span class='desc'>A promise that returns a Connection object         </span>
+      <span class='desc'>A promise that returns a Connection object </span>
     </li>
   </ul>
   <h3>See also:</h3>
@@ -335,7 +297,7 @@ in java this is : Class.forName(&#39;jdbc.class.name&#39;)</p>
   <h3>See also:</h3>
   <ul class='see'>
     <li>
-      <a href='{NodeJDBC#constructor'>constructor}    </a>
+      <a href='{NodeJDBC#constructor'>constructor}</a>
     </li>
   </ul>
 </div>
@@ -356,11 +318,11 @@ in java this is : Class.forName(&#39;jdbc.class.name&#39;)</p>
 </div>
     </div>
     <div id='footer'>
-  March 08, 16 23:33:03 by
+  By
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
-  2.0.11
+  2.1.2
   &#10034;
   Press H to see the keyboard shortcuts
   &#10034;
