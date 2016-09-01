@@ -75,7 +75,7 @@ class Statement
   # sets the query time out parameter
   # this method is synchronous
   setQueryTimeout: (seconds)->
-    @statement.setQueryTimeoutSync secods
+    @statement.setQueryTimeoutSync seconds
 
 
 
