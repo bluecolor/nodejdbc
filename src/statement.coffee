@@ -56,7 +56,7 @@ class Statement
     @statement.clearBatchSync()    
   
   clearBatch: () ->
-    @statement.clearBatch()  
+    @statement.clearBatchAsync()  
 
 
   # Submits a batch of commands to the database for execution and if all commands execute successfully, returns an array of update counts. The int elements of the array that is returned are ordered to correspond to the commands in the batch, which are ordered according to the order in which they were added to the batch. The elements in the array returned by the method executeBatch may be one of the following:
