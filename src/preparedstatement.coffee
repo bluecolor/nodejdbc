@@ -39,6 +39,12 @@ class PreparedStatement
     setTimestamp: (index,value) ->
         timestamp = if value then java.callStaticMethodSync("java.sql.Timestamp", 'valueOf', value) else null
         @preparedStatement.setTimestampSync(index,timestamp)
+    
+
+    setDate: (index,value) ->
+        date = if value then java.callStaticMethodSync("java.sql.Date", 'valueOf', value) else null
+        @preparedStatement.setDateSync(index,date)
+        
 
 
     # executes DDL(Data Definition Language) or DML(Data Manipulation Language) statements
